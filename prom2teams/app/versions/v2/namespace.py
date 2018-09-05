@@ -24,5 +24,8 @@ class AlertReceiver(Resource):
     @api_v2.expect(message)
     def post(self, connector):
         alerts = self.schema.load(request.get_json()).data
+        if 'Critical' in app.config['MICROSOFT_TEAMS']:
+            critical_alerts = [alert for alert in alerts if alert.severity is 'critical']
+            self.sender.send_alarms(critical_alerts, app.config['MICROSOFT_TEAMS']['Critical'])
         self.sender.send_alarms(alerts, app.config['MICROSOFT_TEAMS'][connector])
         return 'OK', 201

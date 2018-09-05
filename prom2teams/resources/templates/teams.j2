@@ -15,22 +15,22 @@
     "summary": "{% if status=='resolved' %}(Resolved) {% endif %}{{ msg_text.summary }}",
     "title": "Prometheus alarm {% if status=='resolved' %}(Resolved) {% elif status=='unknown' %} (status unknown) {% endif %}",
     "sections": [{
-        "activityTitle": "{{ msg_text.summary }}",
+        "activityTitle": "{{ msg_text.summary | escape }}",
         "facts": [{% if msg_text.name %}{
             "name": "Alarm",
-            "value": "{{ msg_text.name }}"
+            "value": "{{ msg_text.name | escape }}"
         },{% endif %}{% if msg_text.instance %}{
             "name": "In host",
-            "value": "{{ msg_text.instance }}"
+            "value": "{{ msg_text.instance | escape }}"
         },{% endif %}{% if msg_text.severity %}{
             "name": "Severity",
-            "value": "{{ msg_text.severity }}"
+            "value": "{{ msg_text.severity | escape }}"
         },{% endif %}{% if msg_text.description %}{
             "name": "Description",
-            "value": "{{ msg_text.description }}"
+            "value": "{{ msg_text.description | escape }}"
         },{% endif %}{
             "name": "Status",
-            "value": "{{ msg_text.status }}"
+            "value": "{{ msg_text.status | escape }}"
         }],
            "markdown": true
     }]
